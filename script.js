@@ -26,6 +26,9 @@ const game = {
   // and much more
 };
 
+var instruction;
+var gameBoard;
+
 setGame();
 
 /*******************************************
@@ -33,11 +36,34 @@ setGame();
 /******************************************/
 function setGame() {
   // register any element in your game object
+  instruction = document.querySelector('.game-instruction__content');
+  gameBoard =  document.querySelector('.game-board');
 }
 
-function startGame() {}
+function startGame() {
+    addCards();
+    bindCardClick();
+}
 
-function handleCardFlip() {}
+function handleCardFlip() {
+  this.classList.add('card--flipped');
+}
+
+function addCards() {
+    var html = '';
+    var rand;
+    
+    for (i = 0; i < 4; i++) {
+      rand = CARD_TECHS[Math.floor(Math.random() * CARD_TECHS.length)];
+
+      html += '<div class="card html5" data-tech="${rand}">';
+      html += '<div class="card__face card__face--front"></div>';
+      html += '<div class="card__face card__face--back"></div>';
+      html += '</div>';
+    }
+    
+   gameBoard.innerHTML = html;
+}
 
 function nextLevel() {}
 
@@ -53,8 +79,17 @@ function updateTimerDisplay() {}
 /*******************************************
 /     bindings
 /******************************************/
-function bindStartButton() {}
+function bindStartButton() 
+{
+  instruction.style.display = "none";
+  startGame();
+}
 
 function unBindCardClick(card) {}
 
-function bindCardClick() {}
+function bindCardClick() {
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(card => {
+      card.addEventListener('click', handleCardFlip);
+  });
+}
