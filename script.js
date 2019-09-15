@@ -22,7 +22,8 @@ const game = {
   scoreDisplay: null,
   levelDisplay: null,
   timerInterval: null,
-  startButton: null
+  startButton: null,
+  preSelected: null
   // and much more
 };
 
@@ -47,6 +48,10 @@ function startGame() {
 
 function handleCardFlip() {
   this.classList.add('card--flipped');
+  //click
+  if (this === game.preSelected) {
+    this.classList.remove('card--flipped');
+  }
 }
 
 function addCards() {
@@ -55,8 +60,7 @@ function addCards() {
     
     for (i = 0; i < 4; i++) {
       rand = CARD_TECHS[Math.floor(Math.random() * CARD_TECHS.length)];
-
-      html += '<div class="card html5" data-tech="${rand}">';
+      html += '<div class="card ' + rand + '" data-tech=' + rand +'>';
       html += '<div class="card__face card__face--front"></div>';
       html += '<div class="card__face card__face--back"></div>';
       html += '</div>';
