@@ -32,6 +32,7 @@ var instruction;
 var gameBoard;
 var score;
 var score_value = 0;
+var timer;
 
 setGame();
 
@@ -40,14 +41,17 @@ setGame();
 /******************************************/
 function setGame() {
   // register any element in your game object
-  instruction = document.querySelector('.game-instruction__content');
+  instruction = document.querySelector('.game-instruction');
   gameBoard =  document.querySelector('.game-board');
   score = document.querySelector('.game-stats__score--value');
+  timer = document.querySelector('.game-timer');
 }
 
 function startGame() {
+    removeCards();
     addCards();
     bindCardClick();
+    updateTimerDisplay();
 }
 
 function handleCardFlip() {
@@ -87,10 +91,21 @@ function handleCardFlip() {
   game.preSelected = currentSelected;
 }
 
+function removeCards() {
+  var cards = document.querySelectorAll('.card');
+
+  if(cards) {
+    cards.forEach(function(element) {
+      element.remove();
+    });
+  }
+}
+
 function shuffle(arr) {
-  var i,
-      j,
-      temp;
+  var i;
+  var j;
+  var temp;
+
   for (i = arr.length - 1; i > 0; i--) {
       j = Math.floor(Math.random() * (i + 1));
       temp = arr[i];
@@ -136,7 +151,17 @@ function updateScore() {
     score.innerHTML = score_value.toString(); 
 }
 
-function updateTimerDisplay() {}
+function updateTimerDisplay() {
+  var count = 60;
+
+  var x = setInterval(function() {
+     count--;
+     if(count < 0) {
+       clearInterval(x);
+     }
+     timer.innerHTML = count;
+  }, 1000);
+}
 
 /*******************************************
 /     bindings
