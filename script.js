@@ -44,7 +44,7 @@ function setGame() {
   instruction = document.querySelector('.game-instruction');
   gameBoard =  document.querySelector('.game-board');
   score = document.querySelector('.game-stats__score--value');
-  timer = document.querySelector('.game-timer');
+  timer = document.querySelector('.game-timer__bar');
 }
 
 function startGame() {
@@ -158,8 +158,10 @@ function updateTimerDisplay() {
      count--;
      if(count < 0) {
        clearInterval(x);
+     } else {
+      timer.innerHTML = count + 's';
      }
-     timer.innerHTML = count;
+
   }, 1000);
 }
 
